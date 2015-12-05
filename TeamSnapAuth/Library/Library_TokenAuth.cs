@@ -62,8 +62,33 @@ namespace TeamSnapAuth.Library
             }
             return (true);
         }
-        // check for error in call to token 
-         
+        // make webauth request
+        public async Task<String> makeWebAuthRequest()
+        {
+
+        }
+        //check if token exists
+        public static bool tokenExists()
+        {
+            if(String.IsNullOrEmpty((string)ApplicationData.Current.LocalSettings.Values["Tokens"]))
+            {
+                return false;
+            }
+            return true;
+
+        } 
+        
+        public async Task<bool> tokenIsValid()
+        {
+            string access_token = null;
+            if (tokenExists())
+            {
+                access_token = (string)ApplicationData.Current.LocalSettings.Values["Tokens"];
+
+            }
+            Debug.WriteLine("tokenIsValid : returning false");
+            return false;
+        } 
         // check if token is still  valid
         
     }
