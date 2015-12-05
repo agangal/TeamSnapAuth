@@ -23,9 +23,9 @@ namespace TeamSnapAuth
             TokenLibrary = new Library_TokenAuth();
         }
 
-        public async Task<String> getToken()
+        public async Task<bool> getToken()
         {
-            string resp = await TokenLibrary.getTeamSnapToken(authEndPoint, clientID, callBackURL);
+            bool resp = await TokenLibrary.getTeamSnapToken(authEndPoint, clientID, callBackURL);
             Debug.WriteLine("access token : " + resp);
             return resp;
         }
