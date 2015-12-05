@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace TeamSnapAuth.Library
 {
     public class Library_TokenAuth
     {
-        public async Task<String> getTeamSnapToken(string authEndPoint, string clientID, string callBackURL)
+        private async Task<bool> getTeamSnapToken(string authEndPoint, string clientID, string callBackURL)
         {
             string access_token = null;
             try
@@ -46,11 +47,12 @@ namespace TeamSnapAuth.Library
                 }
                 else if (WebAuthResult.ResponseStatus == WebAuthenticationStatus.ErrorHttp)
                 {
-                    return (WebAuthResult.ResponseErrorDetail.ToString());
+                    Debug.WriteLine("HTTP Error Response Detail : " + WebAuthResult.ResponseErrorDetail.ToString());
+                    return (false);
                 }
                 else
                 {
-                    return (WebAuthResult.ResponseStatus.ToString());
+                    Debug.WriteLine("Error Response Status : " + WebAuthResult.ResponseStatus.ToString());
                 }
 
             }
@@ -58,10 +60,10 @@ namespace TeamSnapAuth.Library
             {
 
             }
-            return (access_token);
+            return (true);
         }
-       
-        // check for error in call to token
+        // check for error in call to token 
+        private 
         // check if token is still  valid
         
     }
