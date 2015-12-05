@@ -11,7 +11,7 @@ namespace TeamSnapAuth.Library
 {
     public class Library_TokenAuth
     {
-        private async Task<bool> getTeamSnapToken(string authEndPoint, string clientID, string callBackURL)
+        public async Task<bool> getTeamSnapToken(string authEndPoint, string clientID, string callBackURL)
         {
             string access_token = null;
             try
@@ -63,7 +63,7 @@ namespace TeamSnapAuth.Library
             return (true);
         }
         // check for error in call to token 
-        private 
+         
         // check if token is still  valid
         
     }
