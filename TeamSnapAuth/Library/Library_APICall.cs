@@ -21,10 +21,11 @@ namespace TeamSnapAuth.Library
             httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
             Debug.WriteLine("Awaiting http request after this");
             var httpResponseMessage = await httpClient.GetAsync(new Uri(href));
+            Debug.WriteLine("http response status code : " + httpResponseMessage.StatusCode.ToString());
             Debug.WriteLine("Done awaiting http request");
             string apiResponse = await httpResponseMessage.Content.ReadAsStringAsync();
             Debug.WriteLine("Done reading response as string : " + apiResponse);
-
+            
             var dataPackage = new DataPackage();
             dataPackage.SetText(apiResponse);
             Clipboard.SetContent(dataPackage);
