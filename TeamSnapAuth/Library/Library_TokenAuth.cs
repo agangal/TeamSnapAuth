@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 using Windows.Storage;
+using Windows.Web.Http;
+using Windows.Web.Http.Headers;
 
 namespace TeamSnapAuth.Library
 {
@@ -62,11 +65,7 @@ namespace TeamSnapAuth.Library
             }
             return (true);
         }
-        // make webauth request
-        public async Task<String> makeWebAuthRequest()
-        {
-
-        }
+        
         //check if token exists
         public static bool tokenExists()
         {
@@ -84,7 +83,16 @@ namespace TeamSnapAuth.Library
             if (tokenExists())
             {
                 access_token = (string)ApplicationData.Current.LocalSettings.Values["Tokens"];
-
+                string href = "https://api.teamsnap.com/v3/me";
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Bearer", access_token);
+                httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue("application/json"));
+                var httpResponseMessage = await httpClient.GetAsync(new Uri(href));
+                Debug.WriteLine("http response status code : " + httpResponseMessage.StatusCode.ToString());
+                if(httpResponseMessage.StatusCode.ToString().Equals("Ok"))
+                {
+                    return true;
+                }
             }
             Debug.WriteLine("tokenIsValid : returning false");
             return false;

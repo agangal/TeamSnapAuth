@@ -18,7 +18,9 @@ namespace TeamSnapAuth
         public Library_TokenAuth TokenLibrary;
         public LibraryManager()
         {
-            
+            clientID = "76f442af00e77c8423177dc013a7f374a9d98de21ad2db7f4327fa030bf0f5c2";
+            authEndPoint = "https://auth.teamsnap.com/oauth/authorize?client_id=";
+            callBackURL = "https://www.bing.com/";
             APILibrary = new Library_APICall();
             TokenLibrary = new Library_TokenAuth();
         }
@@ -35,6 +37,10 @@ namespace TeamSnapAuth
             //string access_token = (string)ApplicationData.Current.LocalSettings.Values["Tokens"];
             string resp = await APILibrary.apiCall(access_token, api);
             return resp;
+        }
+        public async Task<bool> validateToken()
+        {
+            return (await TokenLibrary.tokenIsValid()
         }
     }
 }

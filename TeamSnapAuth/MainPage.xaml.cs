@@ -35,16 +35,28 @@ namespace TeamSnapAuth
             string resp = null;
             string api = API.Text;
             string access_token = null;
-            if (await Library.getToken())
+            bool tokenval = await Library.validateToken();
+            if (!tokenval)
             {
-                access_token = (string)ApplicationData.Current.LocalSettings.Values["Tokens"];
+                if (await Library.getToken())
+                {
+
+                   
+                }
+                else
+                {
+                    Debug.WriteLine("Error in call");
+                }
+            }
+            access_token = (string)ApplicationData.Current.LocalSettings.Values["Tokens"];
                 resp = await Library.callAPI(access_token, api);
                 APIResult.Text = resp;
-            }
-            else
-            {
-                Debug.WriteLine("Error in call");
-            }
+        }
+
+        private void ErrorCode_Click(object sender, RoutedEventArgs e)
+        {
+            LibraryManager Library = new LibraryManager();
+            Library.validateToken();
         }
     }
 }
